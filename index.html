@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story 💖</title>
+    <style>
+        body {
+            background-color: #880e4f;
+            color: #fff;
+            font-family: Tahoma, sans-serif;
+            text-align: center;
+            padding: 10px;
+            margin: 0;
+            overflow-x: hidden;
+            padding-bottom: 50px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .heart {
+            position: absolute;
+            bottom: -50px;
+            color: rgba(255, 192, 203, 0.55);
+            font-size: 22px;
+            animation: floatUp linear infinite;
+            text-shadow: 0 0 8px rgba(255, 182, 193, 0.4);
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(-105vh) rotate(360deg); opacity: 0; }
+        }
+
+        .lock-love-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .lock-screen, .love-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .love-screen { display: none; }
+        
+        .main-content {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        
+        input {
+            padding: 12px;
+            border-radius: 25px;
+            border: none;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 16px;
+            width: 80%;
+            max-width: 250px;
+            outline: none;
+        }
+        button, .action-btn {
+            padding: 10px 25px;
+            border-radius: 25px;
+            border: 1px solid #f8bbd0;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-weight: bold;
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        .card {
+            background: rgba(100, 10, 50, 0.55);
+            padding: 14px;
+            padding-top: 20px;
+            border-radius: 20px;
+            margin-top: 8px;
+            width: 88%;
+            max-width: 320px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border: 1px solid rgba(248, 187, 208, 0.25);
+            min-height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+            backdrop-filter: blur(3px);
+        }
+        .love-card {
+            justify-content: center;
+            min-height: 130px;
+        }
+
+        /* تصميم مشغل الموسيقى */
+        .custom-audio-player {
+            background: rgba(80, 5, 40, 0.75);
+            border: 1px solid rgba(248, 187, 208, 0.3);
+            border-radius: 35px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            max-width: 340px;
+            margin: 10px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .play-pause-btn {
+            background: #ad1457;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(173, 20, 87, 0.5);
+        }
+        .track-info {
+            font-size: 13px;
+            color: #f8bbd0;
+            font-weight: bold;
+        }
+        .player-img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #f8bbd0;
+        }
+
+        .counter-box {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 6px;
+            background: rgba(0,0,0,0.25);
+            padding: 6px;
+            border-radius: 12px;
+            width: 100%;
+        }
+        .time-unit span {
+            display: block;
+            font-size: 15px;
+            font-weight: bold;
+            color: #f8bbd0;
+        }
+        .time-unit label { font-size: 10px; }
+        .page { display: none; }
+        .page.active { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+        
+        .typing-text {
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            text-align: center;
+        }
+
+        .photos-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            margin-top: 4px;
+        }
+        .photo-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .photo-item {
+            width: 100%;
+            height: 220px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(0,0,0,0.3);
+        }
+        .photo-caption {
+            font-size: 12px;
+            color: #f8bbd0;
+            margin-top: 4px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <!-- عنصر الصوت -->
+    <audio id="loveAudio" loop>
+        <source src="https://www.image2url.com/r2/default/audio/1786765316515-27b4a4a8-8106-4341-9392-5519f53a2adb.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="lock-love-container">
+        <div class="lock-screen" id="lockScreen">
+            <h2 style="font-size: 26px;">welcome 🌹</h2>
+            <p style="color: #f8bbd0;">هلا بيكي 😂</p>
+            <p style="color: #f8bbd0;">اكتبي الباسورد صح يا شاطره 😂 😂</p>
+            <input type="password" id="passInput" placeholder="password">
+            <button onclick="checkPassword()" style="background: #ad1457; border: none;">Unlock 💖</button>
+            <p id="errorMsg" style="color: #f8bbd0; font-size: 14px; display: none; margin-top: 10px;">الباسورد غلط يا شاطره 😂</p>
+        </div>
+
+        <div class="love-screen" id="loveScreen">
+            <div style="font-size: 40px; margin-bottom: 10px;" id="loveEmoji"></div>
+            <div class="card love-card" id="loveCard">
+                <div id="loveText" class="typing-text" style="font-size: 36px; color: #f8bbd0; font-weight: bold;"></div>
+            </div>
+            <button class="action-btn" id="loveBtn" onclick="startMainContent()" style="background: #ad1457; border: none; display: none; margin-top: 15px;">next 💖</button>
+        </div>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        
+        <!-- مشغل الموسيقى (التعديل هنا) -->
+        <div class="custom-audio-player">
+            <img src="https://i.postimg.cc/jCQd5f3y/IMG-20260730-WA0001.jpg" class="player-img" alt="Song Cover">
+            <div class="track-info">دوسي يا حلوه 😉</div>
+            <div class="player-controls">
+                <button class="play-pause-btn" id="playPauseBtn" onclick="togglePlayMusic()">▶</button>
+            </div>
+        </div>
+
+        <div class="page active" id="page1">
+            <div style="font-size: 28px; margin-bottom: 5px;" id="emoji1"></div>
+            <div class="card">
+                <div id="text1" class="typing-text"></div>
+                <div id="subText1" style="color: #f8bbd0; font-weight: bold; margin-top: 8px; font-size: 13px;"></div>
+            </div>
+            <button class="action-btn" id="btn1" onclick="showPage('page2')" style="background: #ad1457; border: none; margin-top: 12px; display: none;">💖 next 💖</button>
+        </div>
+
+        <div class="page" id="page2">
+            <h2 style="margin: 3px 0; font-size: 20px; color: #f8bbd0;">بدايتنا ✨</h2>
+            
+            <div class="card" style="padding: 8px; justify-content: center;">
+                <p style="font-size: 11px; margin: 0 0 4px 0;" id="startDateText">سوا من 2026/07/12 ❤️</p>
+                <div class="counter-box">
+                    <div class="time-unit"><span id="days">0</span><label>يوم</label></div>
+                    <div class="time-unit"><span id="hours">0</span><label>ساعة</label></div>
+                    <div class="time-unit"><span id="minutes">0</span><label>دقيقة</label></div>
+                    <div class="time-unit"><span id="seconds">0</span><label>ثانية</label></div>
+                </div>
+                <p style="font-size: 11px; margin: 6px 0 0 0;">كل ثانية بتعدي وأنت في قلبي ❤️</p>
+            </div>
+
+            <div class="card" style="padding: 8px; justify-content: center;">
+                <div style="font-size: 16px; margin-bottom: 6px;">📸</div>
+                <div class="photos-grid">
+                    <div class="photo-box">
+                        <img src="https://i.postimg.cc/jCQd5f3y/IMG-20260730-WA0001.jpg" class="photo-item" alt="memory 1">
+                        <div class="photo-caption">بحبك</div>
+                    </div>
+                    <div class="photo-box">
+                        <img src="https://i.postimg.cc/Yjfq9FDW/IMG-20260808-WA0003.jpg" class="photo-item" alt="memory 2">
+                        <div class="photo-caption">♥️</div>
+                    </div>
+                    <div class="photo-box">
+                        <img src="https://i.postimg.cc/sQzCd6zd/IMG-20260815-WA0001.jpg" class="photo-item" alt="memory 3">
+                        <div class="photo-caption">ربنا يخليكي ليا</div>
+                    </div>
+                    <div class="photo-box">
+                        <img src="https://i.postimg.cc/vDLHBn29/IMG-20260815-WA0273.jpg" class="photo-item" alt="memory 4">
+                        <div class="photo-caption">بحبك كتير كتير كتير 😂</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="padding: 6px; min-height: auto; justify-content: center;">
+                <p style="font-size: 11px; margin: 0 0 2px 0;">💖 يوم ما قولتلك بحبك 💖</p>
+                <p style="font-size: 10px; color: #f8bbd0; margin: 0;">📅 2026/08/15</p>
+            </div>
+
+            <div style="display: flex; gap: 8px; margin-top: 3px;">
+                <button class="action-btn" onclick="showPage('page3')" style="padding: 5px 12px; font-size: 12px;">next 💖</button>
+                <button class="action-btn" onclick="showPage('page1')" style="padding: 5px 12px; font-size: 12px;">رجوع ◀</button>
+            </div>
+        </div>
+
+        <div class="page" id="page3">
+            <div class="card">
+                <div id="text3" class="typing-text"></div>
+            </div>
+            <p style="color: #f8bbd0; font-weight: bold; margin: 8px 0; font-size: 14px;" id="subText3"></p>
+            <button class="action-btn" onclick="showPage('page1')" style="padding: 5px 18px; font-size: 12px;">ارجعي لي الواتساب بقي 😂</button>
+        </div>
+    </div>
+
+    <script>
+        function createHearts() {
+            const heartsBg = document.getElementById('heartsBg');
+            const heartSymbols = ['❤️', '💖', '💗', '💓', '💕', '✨'];
+            for (let i = 0; i < 25; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 6 + 4) + 's';
+                heart.style.animationDelay = (Math.random() * 5) + 's';
+                heart.style.fontSize = (Math.random() * 18 + 16) + 'px';
+                heartsBg.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        const correctPassword = "بحبك";
+        const startDate = new Date(2026, 6, 12);
+
+        function checkPassword() {
+            if (document.getElementById("passInput").value === correctPassword) {
+                document.getElementById("lockScreen").style.display = "none";
+                document.getElementById("loveScreen").style.display = "flex";
+                runTypingLove();
+            } else {
+                document.getElementById("errorMsg").style.display = "block";
+            }
+        }
+
+        function togglePlayMusic() {
+            const audio = document.getElementById("loveAudio");
+            const btn = document.getElementById("playPauseBtn");
+            if (audio.paused) {
+                audio.play();
+                btn.innerText = "⏸";
+            } else {
+                audio.pause();
+                btn.innerText = "▶";
+            }
+        }
+
+        function runTypingLove() {
+            const emojiEl = document.getElementById("loveEmoji");
+            const textEl = document.getElementById("loveText");
+            const btnEl = document.getElementById("loveBtn");
+            emojiEl.innerText = ""; textEl.innerHTML = ""; btnEl.style.display = "none";
+            setTimeout(() => { emojiEl.innerText = "❤️"; }, 200);
+            const loveMsg = "بحبك"; let i = 0;
+            function typeLove() {
+                if (i < loveMsg.length) {
+                    textEl.innerHTML += loveMsg.charAt(i);
+                    i++;
+                    setTimeout(typeLove, 100);
+                } else { btnEl.style.display = "inline-block"; }
+            }
+            setTimeout(typeLove, 400);
+        }
+
+        function startMainContent() {
+            document.querySelector(".lock-love-container").style.display = "none";
+            document.getElementById("mainContent").style.display = "flex";
+            startTimer();
+            runTyping1();
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            if (pageId === 'page1') runTyping1();
+            else if (pageId === 'page3') runTyping3();
+        }
+
+        function runTyping1() {
+            const emojiEl = document.getElementById("emoji1");
+            const textEl = document.getElementById("text1");
+            const subEl = document.getElementById("subText1");
+            const btnEl = document.getElementById("btn1");
+            emojiEl.innerText = ""; textEl.innerHTML = ""; subEl.innerText = ""; btnEl.style.display = "none";
+            setTimeout(() => { emojiEl.innerText = "😍"; }, 200);
+            const msg1 = "كل يوم معاكي بحس إن الدنيا ابتسمتلي من تاني، وأنا محظوظ أوي إنك في حياتي ❤️\n\nمكنتش أعرف إن الحياة ممكن تكون حلوة كده غير لما عرفتك، إنتي أماني وكل دنيتي 💖";
+            let i = 0;
+            function type1() {
+                if (i < msg1.length) {
+                    textEl.innerHTML += msg1.charAt(i) === '\n' ? '<br>' : msg1.charAt(i);
+                    i++;
+                    setTimeout(type1, 40);
+                } else {
+                    let subMsg = "| loveee youu ❤"; let j = 0;
+                    function typeSub() {
+                        if (j < subMsg.length) {
+                            subEl.innerText += subMsg.charAt(j);
+                            j++;
+                            setTimeout(typeSub, 40);
+                        } else { btnEl.style.display = "inline-block"; }
+                    }
+                    typeSub();
+                }
+            }
+            setTimeout(type1, 400);
+        }
+
+        function runTyping3() {
+            const textEl = document.getElementById("text3");
+            textEl.innerHTML = "";
+            const msg3 = "ربنا ما يحرمني من وجودك أبداً 🌹\n\nإنتي مش بس شخص في حياتي إنتي حياتي نفسها بكل ما فيها بحبك وهفضل أقولها علطول 🥺\n\nمهما الكلام كتير مش هتخدي حقك كفاية إنك أحلى حاجة حصلتلي ☺️\n\nبحبك كتير كتير كتير كتير كتير كتير كتير 😉♥️";
+            let i = 0;
+            function type3() {
+                if (i < msg3.length) {
+                    textEl.innerHTML += msg3.charAt(i) === '\n' ? '<br>' : msg3.charAt(i);
+                    i++;
+                    setTimeout(type3, 40);
+                }
+            }
+            setTimeout(type3, 300);
+        }
+
+        function startTimer() {
+            setInterval(() => {
+                const now = new Date();
+                const diff = now - startDate;
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((diff / 1000 / 60) % 60);
+                const seconds = Math.floor((diff / 1000) % 60);
+                document.getElementById("days").innerText = days >= 0 ? days : 0;
+                document.getElementById("hours").innerText = hours >= 0 ? hours : 0;
+                document.getElementById("minutes").innerText = minutes >= 0 ? minutes : 0;
+                document.getElementById("seconds").innerText = seconds >= 0 ? seconds : 0;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
+
+
+
+
